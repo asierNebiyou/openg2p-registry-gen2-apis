@@ -24,11 +24,12 @@ PingInitializer()
 _config = Settings.get_config()
 
 app = initializer.return_app()
-app.add_middleware(
-    AuthMiddleware,
-    client_id=_config.keycloak_client_id,
-    allow_by_default=True,
-)
+if _config.auth_enabled:
+    app.add_middleware(
+        AuthMiddleware,
+        client_id=_config.keycloak_client_id,
+        allow_by_default=True,
+    )
 
 # AuditMiddleware is added AFTER AuthMiddleware so it becomes the OUTERMOST
 # wrapper. By the time it runs after `call_next`, AuthMiddleware has already
