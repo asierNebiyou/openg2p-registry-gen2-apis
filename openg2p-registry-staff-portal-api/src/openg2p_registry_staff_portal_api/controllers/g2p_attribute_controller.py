@@ -27,18 +27,18 @@ class G2PAttributeController(BaseController):
         self.router.prefix = "/attributes"
 
         self.router.add_api_route(
-            "/get_g2p_attribute_values",
-            self.get_g2p_attribute_values,
+            "/get_attribute_values",
+            self.get_attribute_values,
             responses={200: {"model": GetG2PAttributeValuesResponse}},
             methods=["POST"],
         )
 
     @require_permissions({"referenceData:view"})
-    async def get_g2p_attribute_values(
+    async def get_attribute_values(
         self,
         request: GetG2PAttributeValuesRequest,
     ) -> GetG2PAttributeValuesResponse:
-        _logger.debug("Get G2P Attribute Values Request: %s", request)
+        _logger.debug("Get attribute values request: %s", request)
         try:
             attribute_values: List[G2PAttributeValueData] = await self.g2p_attribute_controller_service.get_attribute_values(
                 request
